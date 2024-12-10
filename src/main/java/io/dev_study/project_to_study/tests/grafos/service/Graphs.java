@@ -1,4 +1,7 @@
-package io.dev_study.project_to_study.tests.grafos;
+package io.dev_study.project_to_study.tests.grafos.service;
+
+import io.dev_study.project_to_study.tests.grafos.model.Edge;
+import io.dev_study.project_to_study.tests.grafos.model.Node;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -52,12 +55,16 @@ public class Graphs<Type> {
 
         for (int i = 0; i < this.nodes.size(); i++) {
             var node = this.nodes.get(i);
-            this.nodes.forEach(currentyN -> {
-                var isFriend = verifyIfAreFriends(node, currentyN.getData().toString());
-                if(isFriend){
-                    System.out.printf(" %s é amigo de %s  \n", node.getData(), currentyN.getData());
-                }
+            this.nodes.forEach(currentyNode -> {
+                var isFriend = verifyIfAreFriends(node, currentyNode.getData().toString());
+                logFriendship(currentyNode, isFriend, node);
             });
+        }
+    }
+
+    private void logFriendship(Node<Type> currentyNode, boolean isFriend, Node<Type> node) {
+        if(isFriend){
+            System.out.printf(" %s é amigo de %s  \n", node.getData(), currentyNode.getData());
         }
     }
 

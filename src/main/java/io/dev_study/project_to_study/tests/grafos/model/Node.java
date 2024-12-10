@@ -1,4 +1,4 @@
-package io.dev_study.project_to_study.tests.grafos;
+package io.dev_study.project_to_study.tests.grafos.model;
 
 import java.util.ArrayList;
 

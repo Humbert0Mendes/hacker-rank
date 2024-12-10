@@ -1,5 +1,7 @@
 package io.dev_study.project_to_study.tests.grafos;
 
+import io.dev_study.project_to_study.tests.grafos.service.Graphs;
+
 public class RunAppGraphs {
 
     public static void main(String[] args) {
