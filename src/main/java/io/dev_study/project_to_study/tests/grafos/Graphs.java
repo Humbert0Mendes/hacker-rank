@@ -14,8 +14,8 @@ public class Graphs<Type> {
     }
 
     public void addNode(Type node) {
-       var newNode = new Node(node);
-       this.nodes.add(newNode);
+        var newNode = new Node(node);
+        this.nodes.add(newNode);
     }
 
 
@@ -23,7 +23,7 @@ public class Graphs<Type> {
         var nodeFrom = this.getNode(from);
         var nodeTo = this.getNode(to);
 
-        if(Objects.nonNull(nodeFrom) && Objects.nonNull(nodeTo)) {
+        if (Objects.nonNull(nodeFrom) && Objects.nonNull(nodeTo)) {
             var newEdge = new Edge<Type>(weight, nodeFrom, nodeTo);
 
             nodeFrom.addEdgeOut(newEdge);
@@ -33,18 +33,36 @@ public class Graphs<Type> {
 
     }
 
-    public Node<Type> getNode(Type dataNode) {
-        Node<Type> node = null;
-        for (int i = 0; i < this.nodes.size(); i++) {
-            if (this.nodes.get(i).getData().equals(dataNode)) {
-                node = this.nodes.get(i);
-                break;
-            }
+    public void printIfF1AndF2AreFriends(String f1, String f2) {
+
+        var nodeF1 = findNode(f1);
+        if (Objects.isNull(nodeF1)) {
+            throw new IllegalArgumentException("Node not found");
         }
-        return node;
+
+        var areFriends = verifyIfAreFriends(nodeF1, f2);
+        if (areFriends) {
+            System.out.printf("F1 (%s) é amigo de F2 (%s)  \n", f1, f2);
+        }else{
+            System.out.printf("F1 (%s) não é amigo de F2 (%s) \n", f1, f2);
+        }
     }
 
-    public void widthSearch(){
+    public void verifyFriendsConections(){
+
+        for (int i = 0; i < this.nodes.size(); i++) {
+            var node = this.nodes.get(i);
+            this.nodes.forEach(currentyN -> {
+                var isFriend = verifyIfAreFriends(node, currentyN.getData().toString());
+                if(isFriend){
+                    System.out.printf(" %s é amigo de %s  \n", node.getData(), currentyN.getData());
+                }
+            });
+        }
+    }
+
+
+    public void widthSearch() {
         var marked = new ArrayList<Node<Type>>();
         var queue = new ArrayList<Node<Type>>();
 
@@ -68,5 +86,30 @@ public class Graphs<Type> {
 
             queue.remove(0);
         }
+    }
+
+    private Node<Type> getNode(Type dataNode) {
+        Node<Type> node = null;
+        for (int i = 0; i < this.nodes.size(); i++) {
+            if (this.nodes.get(i).getData().equals(dataNode)) {
+                node = this.nodes.get(i);
+                break;
+            }
+        }
+        return node;
+    }
+
+    private Node<Type> findNode(String data) {
+        for (Node<Type> node : this.nodes) {
+            if (node.getData().equals(data)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private boolean verifyIfAreFriends(Node<Type> node1, String node2) {
+        return node1.getEdgesOut().stream()
+                .anyMatch(f -> f.getEnd().getData().equals(node2));
     }
 }

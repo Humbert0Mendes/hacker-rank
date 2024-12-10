@@ -19,6 +19,13 @@ public class RunAppGraphs {
         stringGraphs.addEdge("Lili", "Gab", 6.0);
         stringGraphs.addEdge("Bia", "Lili", 8.0);
 
+        System.out.println("Realizando busca de largura ");
         stringGraphs.widthSearch();
+
+        stringGraphs.verifyFriendsConections();
+
+        System.out.println("Verificando conexões de amigos");
+        stringGraphs.printIfF1AndF2AreFriends("Lili", "Gab");
     }
+
 }
